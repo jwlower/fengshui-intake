@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feng Shui Consultation Intake</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #2c3e50;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+
+            .header h1 {
+                font-size: 2.2em;
+                margin-bottom: 10px;
+                font-weight: 300;
+            }
+
+            .header p {
+                font-size: 1.1em;
+                opacity: 0.9;
+                line-height: 1.6;
+            }
+
+        .form-content {
+            padding: 40px 30px;
+        }
+
+        .section {
+            margin-bottom: 45px;
+            opacity: 0;
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+
+            .section:nth-child(odd) {
+                animation-delay: 0.1s;
+            }
+
+            .section:nth-child(even) {
+                animation-delay: 0.2s;
+            }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-title {
+            font-size: 1.4em;
+            color: #667eea;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e8ecf4;
+            font-weight: 400;
+        }
+
+        .question {
+            margin-bottom: 25px;
+        }
+
+            .question label {
+                display: block;
+                font-size: 1.05em;
+                margin-bottom: 8px;
+                color: #34495e;
+                line-height: 1.5;
+            }
+
+            .question.story label {
+                font-style: italic;
+                color: #7f8c8d;
+            }
+
+        input[type="text"], textarea, select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e8ecf4;
+            border-radius: 8px;
+            font-size: 1em;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+            input[type="text"]:focus, textarea:focus, select:focus {
+                outline: none;
+                border-color: #667eea;
+                box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .story-prompt textarea {
+            min-height: 150px;
+            background: linear-gradient(to right, #ffecd2 0%, #fcb69f 100%);
+            background-size: 200% 200%;
+            animation: shimmer 4s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+
+        .ranking-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .ranking-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 6px;
+        }
+
+            .ranking-item select {
+                width: 60px;
+                margin-right: 10px;
+            }
+
+        .scale-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .scale {
+            display: flex;
+            gap: 8px;
+        }
+
+            .scale input[type="radio"] {
+                display: none;
+            }
+
+            .scale label {
+                width: 35px;
+                height: 35px;
+                border-radius: 50%;
+                background: #e8ecf4;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                font-weight: bold;
+                margin-bottom: 0;
+            }
+
+            .scale input[type="radio"]:checked + label {
+                background: #667eea;
+                color: white;
+                transform: scale(1.1);
+            }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1em;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 30px auto;
+            display: block;
+        }
+
+            .submit-btn:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+            }
+
+        .note {
+            background: rgba(102, 126, 234, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            font-style: italic;
+            margin-bottom: 20px;
+            border-left: 4px solid #667eea;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Black Sect Tantric Buddhist Feng Shui Consultation</h1>
+            <p>Your words carry energy and intention. Share freely from your heart, and let your authentic voice guide us toward the transcendental transformation waiting within your space.</p>
+        </div>
+
+        <form class="form-content">
+            <div class="section">
+                <h2 class="section-title">Your Story Begins Here</h2>
+                <div class="question story">
+                    <label>Tell me about yourself and what brought you to this moment of seeking change. What's stirring in your life right now?</label>
+                    <textarea placeholder="Share your story in your own words..."></textarea>
+                </div>
+
+                <div class="question story">
+                    <label>Describe a recent day in your home. Walk me through it from morning to evening - how did you move through your space, what did you feel, what drew your attention?</label>
+                    <textarea placeholder="Paint me a picture of your daily rhythm..."></textarea>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">The Vision</h2>
+                <div class="question story-prompt">
+                    <label>Imagine your most authentic self living in your ideal space. Describe this vision as if you're already there - how do you feel when you wake up, how does your space support who you're becoming?</label>
+                    <textarea placeholder="Step into your vision and describe it from within..."></textarea>
+                </div>
+
+                <div class="question">
+                    <label>If you could change just one thing about how you experience your home, what would shift everything?</label>
+                    <textarea></textarea>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">Energy & Awareness</h2>
+                <div class="question">
+                    <label>How do you typically handle stress or challenges in your life?</label>
+                    <textarea placeholder="Share your patterns and approaches..."></textarea>
+                </div>
+
+                <div class="question">
+                    <label>What areas of your home feel most alive to you? Which feel stuck or heavy?</label>
+                    <textarea></textarea>
+                </div>
+
+                <div class="question">
+                    <label>Have you noticed any patterns in your life that seem to repeat? How might your space be reflecting or supporting these patterns?</label>
+                    <textarea></textarea>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">Life Areas Priority</h2>
+                <div class="note">
+                    Rank these life areas by what's calling for your attention right now (1 = most urgent, 9 = least urgent):
+                </div>
+                <div class="ranking-grid">
+                    <div class="ranking-item">
+                        <select>
+                            <option value="">-</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                        </select>
+                        <span>Prosperity & Abundance</span>
+                    </div>
+                    <div class="ranking-item">
+                        <select>
+                            <option value="">-</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                        </select>
+                        <span>Recognition & Purpose</span>
+                    </div>
+                    <div class="ranking-item">
+                        <select>
+                            <option value="">-</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                        </select>
+                        <span>Love & Partnership</span>
+                    </div>
+                    <div class="ranking-item">
+                        <select>
+                            <option value="">-</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                        </select>
+                        <span>Family & Roots</span>
+                    </div>
+                    <div class="ranking-item">
+                        <select>
+                            <option value="">-</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                        </select>
+                        <span>Health & Vitality</span>
+                    </div>
+                    <div class="ranking-item">
+                        <select>
+                            <option value="">-</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                        </select>
+                        <span>Creativity & Children</span>
+                    </div>
+                    <div class="ranking-item">
+                        <select>
+                            <option value="">-</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                        </select>
+                        <span>Knowledge & Wisdom</span>
+                    </div>
+                    <div class="ranking-item">
+                        <select>
+                            <option value="">-</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                        </select>
+                        <span>Career & Life Path</span>
+                    </div>
+                    <div class="ranking-item">
+                        <select>
+                            <option value="">-</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                        </select>
+                        <span>Support & Community</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">Your Space</h2>
+                <div class="question">
+                    <label>What type of space do you call home?</label>
+                    <select>
+                        <option value="">Select your space type</option>
+                        <option value="house">House</option>
+                        <option value="apartment">Apartment</option>
+                        <option value="condo">Condo</option>
+                        <option value="adu">ADU/Guest House</option>
+                        <option value="studio">Studio</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+
+                <div class="question">
+                    <label>Who shares this sacred space with you?</label>
+                    <textarea placeholder="Family, friends, pets, or perhaps you live solo..."></textarea>
+                </div>
+
+                <div class="question">
+                    <label>How long have you lived here, and what was your first feeling when you arrived?</label>
+                    <textarea></textarea>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">Energy Shifts & Predecessor Chi</h2>
+                <div class="question">
+                    <label>What significant life changes have occurred recently? (moves, losses, relationships, health, work transitions, renovations)</label>
+                    <textarea placeholder="Include anything that shifted the energy in your life or space..."></textarea>
+                </div>
+
+                <div class="question">
+                    <label>Tell me about the history of your space - who lived there before you, what energy did they leave behind? How does your space hold previous experiences?</label>
+                    <textarea placeholder="Include what you know about previous occupants and any lingering energies..."></textarea>
+                </div>
+
+                <div class="question">
+                    <label>Have you brought any pre-owned items into your space recently? How do you feel about objects that carry previous owners' energy?</label>
+                    <textarea placeholder="Antiques, inherited items, thrift finds, gifts from others..."></textarea>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">Transcendental Adjustments & Three Secrets</h2>
+                <div class="question">
+                    <label>How do you feel about working with transcendental cures - items that may not have obvious logical connections but carry deep energetic significance?</label>
+                    <textarea placeholder="Share your openness to mirrors, crystals, plants, or other symbolic adjustments..."></textarea>
+                </div>
+
+                <div class="question">
+                    <label>Are you comfortable with incorporating mantras, mudras, or visualization as part of your space clearing and intention setting?</label>
+                    <textarea placeholder="The Three Secrets reinforcement enhances all adjustments..."></textarea>
+                </div>
+
+                <div class="question">
+                    <label>How do you feel about making changes to your space - moving things, adding elements, or releasing items that no longer serve?</label>
+                    <textarea></textarea>
+                </div>
+
+                <div class="question">
+                    <label>On a scale of 1-10, how ready are you to embrace transformation in your outer space to support your inner growth?</label>
+                    <div class="scale-container">
+                        <span>Not ready</span>
+                        <div class="scale">
+                            <input type="radio" id="ready1" name="readiness" value="1">
+                            <label for="ready1">1</label>
+                            <input type="radio" id="ready2" name="readiness" value="2">
+                            <label for="ready2">2</label>
+                            <input type="radio" id="ready3" name="readiness" value="3">
+                            <label for="ready3">3</label>
+                            <input type="radio" id="ready4" name="readiness" value="4">
+                            <label for="ready4">4</label>
+                            <input type="radio" id="ready5" name="readiness" value="5">
+                            <label for="ready5">5</label>
+                            <input type="radio" id="ready6" name="readiness" value="6">
+                            <label for="ready6">6</label>
+                            <input type="radio" id="ready7" name="readiness" value="7">
+                            <label for="ready7">7</label>
+                            <input type="radio" id="ready8" name="readiness" value="8">
+                            <label for="ready8">8</label>
+                            <input type="radio" id="ready9" name="readiness" value="9">
+                            <label for="ready9">9</label>
+                            <input type="radio" id="ready10" name="readiness" value="10">
+                            <label for="ready10">10</label>
+                        </div>
+                        <span>Fully ready</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">Final Reflection</h2>
+                <div class="question story-prompt">
+                    <label>What else feels important to share? Trust your intuition - what wants to be known?</label>
+                    <textarea placeholder="Let your authentic voice speak..."></textarea>
+                </div>
+            </div>
+
+            <button type="submit" class="submit-btn">Begin the Journey</button>
+        </form>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.querySelector('form');
+
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+                alert('Thank you for sharing your story. Your journey toward sacred space alignment begins now.');
+
+                const { jsPDF } = window.jspdf;
+                const pdf = new jsPDF();
+                const margin = 10;
+                const maxWidth = 180;
+                const lineHeight = 10;
+                const pageHeight = pdf.internal.pageSize.getHeight();
+                let y = 20;
+
+                pdf.setFont('Helvetica');
+                pdf.setFontSize(14);
+                pdf.text("Feng Shui Consultation Responses", margin, y);
+                y += lineHeight * 2;
+
+                const questions = form.querySelectorAll('.question');
+                questions.forEach((q, idx) => {
+                    const label = q.querySelector('label');
+                    let response = "";
+
+                    const textarea = q.querySelector('textarea');
+                    const select = q.querySelector('select');
+                    const radios = q.querySelectorAll('input[type="radio"]');
+
+                    if (textarea) {
+                        response = textarea.value.trim();
+                    } else if (select) {
+                        response = select.value || "Not selected";
+                    } else if (radios.length > 0) {
+                        const checked = [...radios].find(r => r.checked);
+                        response = checked ? checked.value : "Not selected";
+                    }
+
+                    if (label) {
+                        const questionRaw = `Q${idx + 1}: ${label.innerText}`;
+                        const questionLines = pdf.splitTextToSize(questionRaw, maxWidth);
+                        const responseLines = pdf.splitTextToSize(response || "No response", maxWidth);
+
+                        // Handle question lines
+                        pdf.setFontSize(11);
+                        pdf.setTextColor(40);
+                        questionLines.forEach(line => {
+                            if (y + lineHeight > pageHeight - margin) {
+                                pdf.addPage();
+                                y = margin;
+                            }
+                            pdf.text(line, margin, y);
+                            y += lineHeight;
+                        });
+
+                        // Handle response lines
+                        pdf.setFontSize(10);
+                        pdf.setTextColor(80);
+                        responseLines.forEach(line => {
+                            if (y + lineHeight > pageHeight - margin) {
+                                pdf.addPage();
+                                y = margin;
+                            }
+                            pdf.text(line, margin + 5, y);
+                            y += lineHeight;
+                        });
+
+                        y += 5; // extra space between questions
+                    }
+                });
+
+                pdf.save('FengShuiConsultation.pdf');
+            });
+        });
+    </script>
+
+
+
+
+</body>
+</html>
