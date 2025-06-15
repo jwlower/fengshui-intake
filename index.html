@@ -596,6 +596,40 @@
                         y += 5; // extra space between questions
                     }
                 });
+                // Handle Life Areas Priority section
+                const rankingSection = form.querySelector('.ranking-grid');
+                if (rankingSection) {
+                    const items = rankingSection.querySelectorAll('.ranking-item');
+
+                    // Add section header
+                    if (y + lineHeight * 2 > pageHeight - margin) {
+                        pdf.addPage();
+                        y = margin;
+                    }
+                    pdf.setFontSize(12);
+                    pdf.setTextColor(20);
+                    pdf.text("Life Areas Priority Rankings", margin, y);
+                    y += lineHeight;
+
+                    items.forEach((item, i) => {
+                        const select = item.querySelector('select');
+                        const label = item.querySelector('span');
+                        const value = select?.value || "Not selected";
+                        const name = label?.innerText || `Item ${i + 1}`;
+
+                        const line = `${name}: ${value}`;
+                        if (y + lineHeight > pageHeight - margin) {
+                            pdf.addPage();
+                            y = margin;
+                        }
+                        pdf.setFontSize(10);
+                        pdf.setTextColor(80);
+                        pdf.text(line, margin + 5, y);
+                        y += lineHeight;
+                    });
+
+                    y += 5; // spacing after section
+                }
 
                 pdf.save('FengShuiConsultation.pdf');
             });
